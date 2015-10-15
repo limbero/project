@@ -185,7 +185,9 @@ def tokenize(text , lang = 'def'):
 		clean_text = clean_text.replace('·',' ·')
 		clean_text = clean_text.replace('<',' < ')
 		clean_text = clean_text.replace('>',' > ')
-		out_file.write(clean_text.strip())
+		for line in clean_text.split("\n"):
+			out_file.write(line.strip())
+			out_file.write('\n')
 	out_file.close()
 #re.split('[]', file)
 #tokenizer = nltk.data.load('tokenizers/punkt/english.pickle')
