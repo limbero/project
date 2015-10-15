@@ -63,6 +63,14 @@ def clean_sv(sv):
 			out_file_sv_dirty.write(line+ "   ======small length")
 			out_file_sv_dirty.write('\n')
 			continue
+		line = line.replace('Å','å')
+		line = line.replace('Ä','ä')
+		line = line.replace('Ö','ö')
+		if not bool(re.search(r'^[a-zäöå]', line.lower())):
+			#print ("=======================" + line)
+			out_file_sv_dirty.write(line)
+			out_file_sv_dirty.write('\n')
+			continue
 		'''
 		reg_char = 'the|I|[h|H]ave|[Y|y]ou|[H|h]e|[S|s]he|\
 		[W|w]e|they| is| it|your| not|can|could|will| was| were| our| to | this| a | like| has'
@@ -82,9 +90,6 @@ def clean_sv(sv):
 				break
 		if flag:
 			continue
-		line = line.replace('Å','å')
-		line = line.replace('Ä','ä')
-		line = line.replace('Ö','ö')
 		out_file_sv.write(line.lower())
 		out_file_sv.write('\n')
 	out_file_sv_dirty.close()
@@ -137,7 +142,12 @@ def clean_en(en):
 	    	out_file_en_dirty.write(line)
 	    	out_file_en_dirty.write('\n')
 	    	continue
+	    if not bool(re.search(r'^[a-z]', line.lower())):
+			out_file_sv_dirty.write(line)
+			out_file_sv_dirty.write('\n')
+			continue
 	    out_file_en.write(line.lower())
+	    out_file_en.write('\n')
 	out_file_en_dirty.close()
 	out_file_en.close()
 	tokenize('clean_en')
@@ -175,7 +185,9 @@ def tokenize(text , lang = 'def'):
 		clean_text = clean_text.replace('·',' ·')
 		clean_text = clean_text.replace('<',' < ')
 		clean_text = clean_text.replace('>',' > ')
-		out_file.write(clean_text)
+		for line in clean_text.split("\n"):
+			out_file.write(line.strip())
+			out_file.write('\n')
 	out_file.close()
 #re.split('[]', file)
 #tokenizer = nltk.data.load('tokenizers/punkt/english.pickle')
