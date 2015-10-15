@@ -66,7 +66,7 @@ def clean_sv(sv):
 		line = line.replace('Å','å')
 		line = line.replace('Ä','ä')
 		line = line.replace('Ö','ö')
-		if not bool(re.search(r'[a-z]', line.lower())):
+		if not bool(re.search(r'^[a-zäöå]', line.lower())):
 			#print ("=======================" + line)
 			out_file_sv_dirty.write(line)
 			out_file_sv_dirty.write('\n')
@@ -142,7 +142,7 @@ def clean_en(en):
 	    	out_file_en_dirty.write(line)
 	    	out_file_en_dirty.write('\n')
 	    	continue
-	    if not bool(re.search(r'[a-z]', line.lower())):
+	    if not bool(re.search(r'^[a-z]', line.lower())):
 			out_file_sv_dirty.write(line)
 			out_file_sv_dirty.write('\n')
 			continue
