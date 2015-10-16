@@ -10,8 +10,7 @@ from nltk.corpus import stopwords
 from nltk.corpus import swadesh
 english_stopwords = stopwords.words('english')
 swedish_stopwords = stopwords.words('swedish')
-#set(w.lower() for w in text)
-#swadesh.fileids()
+
 english_common_words = swadesh.words('en')
 
 sv_eng_sim_in_sw_stopwords = ['i', 'till', 'dig', 'under']
@@ -35,18 +34,17 @@ def read_files():
 	doc_=open(path_el,'r')
 	el = doc_.read()
 	doc_.close
-	#doc_ = open(path_en,'r')
-	#en = doc_.read()
-	#doc_.close
-	#remove_string(el, en)
+	doc_ = open(path_en,'r')
+	en = doc_.read()
+	doc_.close
 	doc = open(path_sv, 'r')
 	sv = doc.read()
 	doc.close()
 	#########################################
 	#comment out what you don't want to call
-	#clean_el(el)
+	clean_el(el)
 	clean_sv(sv)
-	#clean_en(en)
+	clean_en(en)
 	########################################
 def clean_sv(sv):
 	out_file_sv = open('clean_sv', 'w')
@@ -67,7 +65,6 @@ def clean_sv(sv):
 		line = line.replace('Ä','ä')
 		line = line.replace('Ö','ö')
 		if not bool(re.search(r'^[a-zäöå]', line.lower())):
-			#print ("=======================" + line)
 			out_file_sv_dirty.write(line)
 			out_file_sv_dirty.write('\n')
 			continue
@@ -110,10 +107,6 @@ def clean_el(el):
 			out_file_el_dirty.write(line)
 			out_file_el_dirty.write('\n')
 			continue
-		'''
-		if line.find('/') == -1 and line.find('[') == -1:
-			pass
-		'''
 		reg_char = '[\[/\^_-\*<\=|a-z]'
 		reg_char = '[#|a-z]'
 		reg_char = '[\[/\^]'
@@ -143,8 +136,8 @@ def clean_en(en):
 	    	out_file_en_dirty.write('\n')
 	    	continue
 	    if not bool(re.search(r'^[a-z]', line.lower())):
-			out_file_sv_dirty.write(line)
-			out_file_sv_dirty.write('\n')
+			out_file_en_dirty.write(line)
+			out_file_en_dirty.write('\n')
 			continue
 	    out_file_en.write(line.lower())
 	    out_file_en.write('\n')
@@ -169,10 +162,8 @@ def tokenize(text , lang = 'def'):
 	else:
 		array = re.split(r"(\.\s)",clean_text)
 		clean_text = " ".join(array)
-		#clean_text = clean_text.replace('.',' . ')
 		clean_text = clean_text.replace('!',' !')
 		clean_text = clean_text.replace('...',' ...')
-		#clean_text = clean_text.replace(':',' :')
 		clean_text = clean_text.replace('?',' ?')
 		clean_text = clean_text.replace(';',' ;')
 		clean_text = clean_text.replace(',',' , ')
@@ -189,11 +180,6 @@ def tokenize(text , lang = 'def'):
 			out_file.write(line.strip())
 			out_file.write('\n')
 	out_file.close()
-#re.split('[]', file)
-#tokenizer = nltk.data.load('tokenizers/punkt/english.pickle')
-#print nltk.data.path
-
-
 
 
 
