@@ -160,11 +160,10 @@ def tokenize(text , lang = 'def'):
 		tokenizer = nltk.data.load('tokenizers/punkt/greek.pickle')
 		out_file.write('\n'.join(tokenizer.tokenize(clean_text)))
 	else:
-		array = re.split(r"(\.\s)",clean_text)
+		array = re.split(r"(\.\s|\?\s)",clean_text)
 		clean_text = " ".join(array)
 		clean_text = clean_text.replace('!',' !')
 		clean_text = clean_text.replace('...',' ...')
-		clean_text = clean_text.replace('?',' ?')
 		clean_text = clean_text.replace(';',' ;')
 		clean_text = clean_text.replace(',',' , ')
 		clean_text = clean_text.replace('[',' ')
